@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValePay — Vales de despensa electrónicos con capital de trabajo para la PyME mexicana</title>
+<meta name="description" content="ValePay emite vales de despensa electrónicos para empresas formales, construye una red de comercios afiliados y convierte los datos transaccionales en crédito de capital de trabajo. Deducible, auditable y sin hardware.">
+<meta name="author" content="ValePay">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ValePay — Vales de despensa electrónicos con capital de trabajo para la PyME mexicana">
+<meta property="og:description" content="Vales deducibles hasta 7× la UMA, red de comercios sin hardware y scoring alternativo con datos transaccionales propios.">
+<meta property="og:locale" content="es_MX">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a2540'/%3E%3Ctext x='16' y='23' font-family='Segoe UI,Roboto,sans-serif' font-size='17' font-weight='800' fill='%2300b4d8' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --navy:#0a2540; --navy-2:#123a5c; --cyan:#00b4d8; --cyan-d:#0090ad; --cyan-bg:#e8f7fb;
+  --bg:#f4f7fb; --white:#fff; --ink:#132234; --ink-2:#4a6076; --ink-3:#7d94a8;
+  --line:#dce7f1; --ok:#0f9d58; --warn:#d97706; --bad:#d64545; --amber-bg:#fff8e6;
+  --r:14px; --r-sm:9px; --sh:0 1px 3px rgba(10,37,64,.06),0 8px 28px rgba(10,37,64,.06);
+  --sh-lg:0 2px 6px rgba(10,37,64,.07),0 20px 50px rgba(10,37,64,.10);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Inter","Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;background:rgba(10,37,64,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.09)}
+.nav-in{max-width:1180px;margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center;gap:1.5rem}
+.brand{font-weight:800;font-size:1.22rem;letter-spacing:-.5px;color:#fff;text-decoration:none;white-space:nowrap}
+.brand em{font-style:normal;color:var(--cyan)}
+.nav nav{display:flex;gap:.15rem;margin-left:auto;flex-wrap:wrap}
+.nav nav a{color:rgba(255,255,255,.76);text-decoration:none;font-size:.84rem;font-weight:500;padding:.45rem .7rem;border-radius:7px;transition:.16s}
+.nav nav a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.burger{display:none;margin-left:auto;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer;line-height:1;padding:.2rem .4rem}
+
+/* ---------- hero ---------- */
+.hero{background:radial-gradient(1200px 600px at 78% -10%,rgba(0,180,216,.20),transparent 60%),linear-gradient(165deg,#0a2540,#123a5c 55%,#0a2540);color:#fff;padding:9.5rem 0 5.5rem;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto 0 -1px 0;height:70px;background:linear-gradient(transparent,var(--bg))}
+.gh{max-width:940px}
+.pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,180,216,.14);border:1px solid rgba(0,180,216,.38);color:#8ee6f7;font-size:.76rem;font-weight:600;padding:.4rem .85rem;border-radius:99px;letter-spacing:.02em;margin-bottom:1.6rem}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px rgba(0,180,216,.25)}
+h1{font-size:clamp(2.1rem,4.6vw,3.5rem);font-weight:800;letter-spacing:-1.6px;line-height:1.1;margin-bottom:1.3rem}
+h1 .g{background:linear-gradient(100deg,var(--cyan),#7ef0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.1rem;color:rgba(255,255,255,.8);max-width:720px;margin-bottom:2.2rem}
+.lead b{color:#fff;font-weight:600}
+.cta{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.5rem;border-radius:var(--r-sm);font-weight:600;font-size:.92rem;text-decoration:none;transition:.18s;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-p{background:var(--cyan);color:#04283a}
+.btn-p:hover{background:#31c9e8;transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,180,216,.35)}
+.btn-g{border-color:rgba(255,255,255,.28);color:#fff}
+.btn-g:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.btn-s{background:var(--navy);color:#fff}
+.btn-s:hover{background:var(--navy-2);transform:translateY(-1px)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.13);border-radius:var(--r);overflow:hidden;margin-top:3.5rem;position:relative;z-index:1}
+.hero-stats div{background:rgba(10,37,64,.62);padding:1.3rem 1.4rem}
+.hs-n{font-size:1.75rem;font-weight:800;letter-spacing:-.8px;color:var(--cyan);font-variant-numeric:tabular-nums}
+.hs-l{font-size:.78rem;color:rgba(255,255,255,.62);margin-top:.15rem}
+
+/* ---------- sections ---------- */
+section{padding:5.5rem 0}
+.alt{background:var(--white)}
+.eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan-d);margin-bottom:.9rem}
+h2{font-size:clamp(1.7rem,3.2vw,2.35rem);font-weight:800;letter-spacing:-.9px;line-height:1.2;margin-bottom:1rem;max-width:840px}
+h3{font-size:1.14rem;font-weight:700;letter-spacing:-.3px;margin-bottom:.5rem}
+.sub{color:var(--ink-2);max-width:760px;margin-bottom:2.6rem;font-size:1.02rem}
+
+/* ---------- cards ---------- */
+.grid{display:grid;gap:1.15rem}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:1.6rem;transition:.2s}
+.g2 .card:hover,.g3 .card:hover,.g4 .card:hover{border-color:#bcd9ea;box-shadow:var(--sh);transform:translateY(-2px)}
+.alt .card{background:var(--bg)}
+.num{width:34px;height:34px;border-radius:9px;background:var(--cyan-bg);color:var(--cyan-d);display:grid;place-items:center;font-weight:800;font-size:.92rem;margin-bottom:.95rem;flex:none}
+.ic{width:40px;height:40px;border-radius:11px;background:var(--cyan-bg);color:var(--cyan-d);display:grid;place-items:center;margin-bottom:1rem}
+.ic svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.card p{color:var(--ink-2);font-size:.93rem}
+.card ul{margin-top:.8rem;padding-left:1.05rem;color:var(--ink-2);font-size:.9rem}
+.card li{margin-bottom:.35rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--white);-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:560px}
+th,td{padding:.85rem 1.05rem;text-align:left;border-bottom:1px solid var(--line)}
+th{background:#f7fafd;font-weight:700;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafcfe}
+td.num-c,th.num-c{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tfoot td{background:#f7fafd;font-weight:700;border-top:2px solid var(--line)}
+tr.hi td{background:var(--cyan-bg);font-weight:700}
+tr.be td{background:#eefaf2;font-weight:700;color:#0b6b3c}
+.src{font-size:.78rem;color:var(--ink-3);margin-top:.7rem}
+
+/* ---------- tags ---------- */
+.tag{display:inline-block;font-size:.71rem;font-weight:700;letter-spacing:.03em;padding:.2rem .55rem;border-radius:5px;white-space:nowrap}
+.t-crit{background:#fdeaea;color:#a83232}
+.t-alta{background:var(--amber-bg);color:#a35c05}
+.t-media{background:#eef2f7;color:#5a7086}
+.t-ok{background:#e7f7ee;color:#0b6b3c}
+.t-info{background:var(--cyan-bg);color:var(--cyan-d)}
+
+/* ---------- flow ---------- */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;counter-reset:s}
+.step{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:1.25rem 1.1rem;position:relative}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:27px;height:27px;border-radius:7px;background:var(--navy);color:#fff;font-weight:800;font-size:.8rem;margin-bottom:.8rem}
+.step p{font-size:.86rem;color:var(--ink-2)}
+.step:last-child{background:var(--navy);border-color:var(--navy);color:#fff}
+.step:last-child::before{background:var(--cyan);color:#04283a}
+.step:last-child p{color:rgba(255,255,255,.75)}
+.arrow{position:absolute;right:-.72rem;top:50%;transform:translateY(-50%);color:#bcd9ea;font-size:1rem;z-index:1}
+
+/* ---------- economics ---------- */
+.unit{background:var(--navy);color:#fff;border-radius:var(--r-lg,18px);padding:2.2rem;box-shadow:var(--sh-lg)}
+.unit h3{color:#fff;margin-bottom:.3rem}
+.unit .sub{color:rgba(255,255,255,.66);margin-bottom:1.7rem}
+.ur{display:flex;justify-content:space-between;align-items:center;padding:.72rem 0;border-bottom:1px dashed rgba(255,255,255,.16);font-size:.94rem}
+.ur:last-of-type{border-bottom:0}
+.ur .lbl{color:rgba(255,255,255,.78)}
+.ur .lbl.pos .v{color:#6ee7a8}
+.ur .lbl.neg .v{color:#ff9a9a}
+.ur .lbl.mul{color:rgba(255,255,255,.55);font-style:italic}
+.v{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ur.tot{border-top:2px solid rgba(255,255,255,.3);border-bottom:0;margin-top:.6rem;padding-top:1rem;font-size:1.06rem;font-weight:700}
+.ur.tot .lbl{color:#fff;font-weight:700}
+.ur.tot .v{color:var(--cyan);font-size:1.32rem}
+.unit-note{margin-top:1.5rem;padding:1rem 1.15rem;background:rgba(255,255,255,.07);border-left:3px solid var(--cyan);border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:.85rem;color:rgba(255,255,255,.74)}
+
+/* ---------- callout ---------- */
+.note{border-radius:var(--r);padding:1.3rem 1.5rem;font-size:.92rem;display:flex;gap:1rem;align-items:flex-start;margin:1.6rem 0}
+.note .ic{width:34px;height:34px;border-radius:9px;margin:0;flex:none;display:grid;place-items:center;font-size:1.1rem}
+.n-fix{background:#eefaf2;border:1px solid #b9e4cb}
+.n-fix .ic{background:#cdeeda;color:#0b6b3c}
+.n-warn{background:var(--amber-bg);border:1px solid #f5d9a0}
+.n-warn .ic{background:#fcebc8;color:#a35c05}
+.note b{display:block;margin-bottom:.2rem}
+.note p{color:var(--ink-2);font-size:.89rem}
+.note.n-fix p,.note.n-warn p{color:inherit;opacity:.9}
+
+/* ---------- be box ---------- */
+.be{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.be div{background:var(--white);padding:1.5rem 1.3rem;text-align:center}
+.be .n{font-size:1.6rem;font-weight:800;letter-spacing:-.7px;color:var(--navy);font-variant-numeric:tabular-nums}
+.be .n.acc{color:var(--ok)}
+.be .l{font-size:.79rem;color:var(--ink-2);margin-top:.2rem}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;padding-left:2.1rem}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--cyan),#cfe3ef)}
+.tl-i{position:relative;padding-bottom:2.1rem}
+.tl-i:last-child{padding-bottom:0}
+.tl-i::before{content:"";position:absolute;left:-2.1rem;top:5px;width:18px;height:18px;border-radius:50%;background:var(--white);border:3px solid var(--cyan)}
+.tl-i.done::before{background:var(--ok);border-color:var(--ok)}
+.tl-h{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.3rem}
+.tl-h b{font-size:1.05rem;font-weight:700}
+.tl-p{font-size:.78rem;font-weight:700;color:var(--cyan-d);background:var(--cyan-bg);padding:.15rem .5rem;border-radius:5px}
+.tl-i ul{margin-top:.55rem;padding-left:1.1rem;color:var(--ink-2);font-size:.91rem}
+.tl-i li{margin-bottom:.3rem}
+
+/* ---------- risks ---------- */
+.risk{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:1.25rem 1.4rem}
+.risk.hot{border-left-color:var(--bad)}
+.risk h3{font-size:1rem}
+.risk p{color:var(--ink-2);font-size:.89rem;margin-top:.3rem}
+.risk .mit{margin-top:.7rem;padding-top:.7rem;border-top:1px dashed var(--line);font-size:.86rem;color:var(--ink-2)}
+.risk .mit b{color:var(--ok)}
+
+/* ---------- ask ---------- */
+.ask{background:radial-gradient(900px 500px at 85% 0%,rgba(0,180,216,.18),transparent 60%),var(--navy);color:#fff;border-radius:20px;padding:3rem 2.6rem;box-shadow:var(--sh-lg)}
+.ask h2{color:#fff;max-width:none}
+.ask .sub{color:rgba(255,255,255,.72)}
+.rounds{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem;margin:2.2rem 0}
+.round{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--r);padding:1.5rem}
+.round .k{font-size:.74rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--cyan);margin-bottom:.5rem}
+.round .a{font-size:2rem;font-weight:800;letter-spacing:-1px;margin-bottom:.15rem}
+.round .u{font-size:.9rem;color:rgba(255,255,255,.68);margin-bottom:.9rem}
+.round p{font-size:.87rem;color:rgba(255,255,255,.74)}
+.use{display:flex;justify-content:space-between;font-size:.85rem;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.76)}
+.use:last-child{border-bottom:0}
+.use b{color:#fff;font-variant-numeric:tabular-nums}
+
+/* ---------- faq ---------- */
+.faq{border-top:1px solid var(--line)}
+.fq{border-bottom:1px solid var(--line)}
+.fq summary{cursor:pointer;padding:1.15rem 2.2rem 1.15rem 0;font-weight:600;font-size:.98rem;list-style:none;position:relative;transition:.15s}
+.fq summary:hover{color:var(--cyan-d)}
+.fq summary::-webkit-details-marker{display:none}
+.fq summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:1.4rem;font-weight:400;color:var(--cyan-d);line-height:1}
+.fq[open] summary::after{content:"−"}
+.fq .ans{padding:0 2.2rem 1.3rem 0;color:var(--ink-2);font-size:.92rem}
+.fq .ans p+p{margin-top:.6rem}
+
+/* ---------- footer ---------- */
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:3rem 0;font-size:.87rem}
+.f-in{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+footer .brand{margin-bottom:.7rem}
+.f-dis{max-width:620px;font-size:.82rem;line-height:1.6}
+.f-src{font-size:.78rem;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.12);max-width:620px}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .g4,.be{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:1fr}
+  .arrow{display:none}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .rounds{grid-template-columns:1fr}
+  .unit{padding:1.7rem}
+  .ask{padding:2.2rem 1.7rem}
+}
+@media(max-width:760px){
+  .nav nav{position:absolute;top:66px;left:0;right:0;background:var(--navy);flex-direction:column;padding:.7rem 1rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.1);display:none}
+  .nav nav.open{display:flex}
+  .burger{display:block}
+  section{padding:3.7rem 0}
+  .g2,.g3,.g4,.be{grid-template-columns:1fr}
+  .hero{padding:7.5rem 0 4.5rem}
+  .hero-stats{grid-template-columns:1fr 1fr;margin-top:2.5rem}
+  .hs-n{font-size:1.4rem}
+}
+@media print{
+  .nav,.cta{display:none}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top">Vale<em>Pay</em></a>
+    <button class="burger" id="burger" aria-label="Menú" aria-expanded="false">☰</button>
+    <nav id="menu">
+      <a href="#problema">Problema</a>
+      <a href="#modelo">Modelo</a>
+      <a href="#legal">Legal</a>
+      <a href="#finanzas">Finanzas</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#riesgos">Riesgos</a>
+      <a href="#capital">Capital</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" style="padding:9.5rem 0 5.5rem">
+  <div class="wrap">
+    <div class="gh">
+      <span class="pill"><span class="dot"></span>Autorización SAT en trámite · Fase 0</span>
+      <h1>Vales de despensa deducibles.<br><span class="g">Capital de trabajo</span> para el comercio que los acepta.</h1>
+      <p class="lead">ValePay emite vales electrónicos para empresas formales, afilia comercios sin hardware y convierte cada transacción en un score crediticio. El mismo peso que hoy se pierde en un dato de venta, financia el inventario de la tienda de la esquina.</p>
+      <div class="cta">
+        <a class="btn btn-p" href="#empresarios">Quiero emitir vales →</a>
+        <a class="btn btn-g" href="#capital">Ver el modelo financiero</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hs-n">6.14M</div><div class="hs-l">establecimientos en México · DENUE 05/2026</div></div>
+      <div><div class="hs-n">22.7M</div><div class="hs-l">trabajadores registered al IMSS</div></div>
+      <div><div class="hs-n">10M</div><div class="hs-l">reciben vales hoy · Aseval 2025</div></div>
+      <div><div class="hs-n">$910M</div><div class="hs-l">volumen anual en punto de equilibrio</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROBLEMA ================= -->
+<section id="problema">
+  <div class="wrap">
+    <span class="eyebrow">El problema</span>
+    <h2>Dos mercados roto, y el activo que los une está desperdiciado</h2>
+        <p class="sub">El 56% de los trabajadores formales registrados en el IMSS no recibe vales de despensa. Y el pequeño comercio que los aceptaría no tiene capital para inventario. ValePay ataca ambos con la misma transacción.</p>
+
+    <div class="grid g3">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3>12.7M trabajadores sin beneficio</h3>
+        <p>De 22.7M afiliados al IMSS, solo 10M reciben vales. El tope fiscal es de 7 veces la UMA mensual por trabajador, y la exención al empleado llega al 40% del salario mínimo diario. El incentivo fiscal existe; falta el canal de distribución.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9l1.5-4.5h15L21 9M3 9h18M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9M3 9a3 3 0 006 0 3 3 0 006 0 3 3 0 006 0"/></svg></div>
+        <h3>El comercio pequeño no tiene capital de trabajo</h3>
+        <p>95.4% de las empresas registradas en el IMSS son microempresas con menos de 10 trabajadores. El emisor tradicional no las atiende porque su onboarding exige Causa, contrato y volumen garantizado. El barra alto no es de tecnología: es de proceso.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <h3>El dato ya se genera, nadie lo usa</h3>
+        <p>Cada canje de un vale genera ticket promedio, frecuencia, recencia, estacionalidad y mix de categoría. Ese es exactamente el expediente que las buras de crédito no tienen del PyME. El banco no puede prestar sin datos, y el dato ya se está pagando.</p>
+      </div>
+    </div>
+
+    <div class="note n-warn">
+      <div class="ic">⚠</div>
+      <div>
+        <b>El documento original estimaba el mercado en $114MM.</b>
+        <p>Esa cifra no se sostiene. Los 6.14M establecimientos de la DENUE no son todos giros elegibles: si se filtra por vales de despensa, el universe real ronda 3.58M. Cualquier proyección de ingresos construida sobre la cifra sin filtrar está inflada por un orden de magnitud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODELO ================= -->
+<section class="alt" id="modelo">
+  <div class="wrap">
+    <span class="eyebrow">Modelo de negocio</span>
+    <h2>Un solo flujo de caja, cuatro monetizaciones — y solo una cuenta como ingreso core</h2>
+    <p class="sub">El núcleo es la emisión. Todo lo demás se activa sobre la misma transacción, sin infrastructure adicional.</p>
+
+    <div class="flow" style="margin-bottom:2.4rem">
+      <div class="step"><h3>Empresa</h3><p>Contrata ValePay y deposita el fondo de vale + markup.</p><span class="arrow">→</span></div>
+      <div class="step"><h3>Portador</h3><p>Recibe saldo en la app, sin costo de apertura ni cuota.</p><span class="arrow">→</span></div>
+      <div class="step"><h3>Comercio</h3><p>Cobra por QR o NFC. Sin terminal, sin inventario.</p><span class="arrow">→</span></div>
+      <div class="step"><h3>Datos</h3><p>Flujo, ticket, frecuencia y categoría por comercio.</p><span class="arrow">→</span></div>
+      <div class="step"><h3>Capital</h3><p>Línea revolvente y ofertas al portador.</p></div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.5rem">
+      <div class="card">
+        <span class="tag t-ok">Core · año 1 en adelante</span>
+        <h3 style="margin-top:.7rem">1. Markup de emisión</h3>
+        <p>Cobro a la empresa cliente sobre el monto emitido. Es la única fuente de ingreso que no depende de una tercera parte y por eso es la que se proyecta en el base case.</p>
+      </div>
+      <div class="card">
+        <span class="tag t-alta">Habilitante</span>
+        <h3 style="margin-top:.7rem">2. Descuento al comercio — no es ingreso</h3>
+        <p>El comercio recibe 98.5–99.5% del valor facial. Ese 0.5–1.5% sale del markup del emisor. Es el mismo peso visto desde el otro extremo: se cuenta una vez, como costo.</p>
+      </div>
+      <div class="card">
+        <span class="tag t-media">Activado por escala</span>
+        <h3 style="margin-top:.7rem">3. Crédito de capital de trabajo</h3>
+        <p>Líneas revolventes de $5,000 a $50,000 para comercios con historial transaccional suficiente. Entra al modelo solo a partir del año 4, cuando hay volumen para puntuar.</p>
+      </div>
+      <div class="card">
+        <span class="tag t-media">Opcional</span>
+        <h3 style="margin-top:.7rem">4. Venta cruzada al portador</h3>
+        <p>Ofertas y productos de terceros dentro de la app. Fuera del base case hasta tener comportamiento real de consumo: en 2.27M de portadores sin datos observados, esta línea es especulación.</p>
+      </div>
+    </div>
+
+    <div class="note n-fix">
+      <div class="ic">✓</div>
+      <div>
+        <b>Corrección: el documento anterior sumaba el 4.5% de emisión y el 1.0% de liquidación como dos ingresos.</b>
+        <p>Eran el mismo peso contado dos veces. Sumado además un costo de procesamiento del 0.3% del volumen, la contribución ficticia llegaba a 72% de margen. La estructura real se calcula por cada $100 de vale, abajo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UNIT ECONOMICS ================= -->
+<section id="unidad">
+  <div class="wrap">
+    <span class="eyebrow">Estructura de margen</span>
+    <h2>Qué gana ValePay por cada $100 de vale emitido</h2>
+    <p class="sub">Cálculo con una sola comisión. Todas las cifras de la proyección salen de esta tabla.</p>
+
+    <div class="unit">
+      <h3>Unit economics por $100 de vale</h3>
+      <p class="sub">Escenario base · 4.3% de markup al empleador</p>
+
+      <div class="ur"><span class="lbl">Markup cobrado a la empresa</span><span class="v">+ $4.30</span></div>
+      <div class="ur"><span class="lbl neg">Descuento liquidado al comercio (1.0%)</span><span class="v">− $1.00</span></div>
+      <div class="ur"><span class="lbl neg">Procesamiento, switch y settlement (1.0%)</span><span class="v">− $1.00</span></div>
+      <div class="ur"><span class="lbl neg">Fraude y fondeo del float (0.25%)</span><span class="v">− $0.25</span></div>
+      <div class="ur"><span class="lbl mul">× redención y share de red (60%)</span><span class="v">× 0.60</span></div>
+      <div class="ur tot"><span class="lbl">Contribución neta</span><span class="v">$4.29</span></div>
+
+      <div class="unit-note">
+        <strong>4.29% del volumen emitido.</strong> No 72% de margen de contribución. La venta de vales es un negocio de margen fino y alto volumen: la rentabilidad no está en el margen unitario, está en cuántos miles de comercios pueden alimentar la red sin que el costo variable suba.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINANZAS ================= -->
+<section class="alt" id="finanzas">
+  <div class="wrap">
+    <span class="eyebrow">Proyección</span>
+    <h2>Base case a cinco años</h2>
+    <p class="sub">Construido desde la unit economics de arriba, no desde un top-down de penetración de mercado. El volumen se deriva de clientes y trabajadores promedio por cliente.</p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Año</th><th class="num-c">Empresas</th><th class="num-c">Portadores</th>
+            <th class="num-c">Volumen MDP</th><th class="num-c">Core</th><th class="num-c">Crédito</th>
+            <th class="num-c">Ingresos</th><th class="num-c">Variables</th><th class="num-c">Fijos</th><th class="num-c">Resultado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>1</b></td><td class="num-c">20</td><td class="num-c">1,100</td><td class="num-c">13</td><td class="num-c">0.5</td><td class="num-c">—</td><td class="num-c">0.5</td><td class="num-c">0.1</td><td class="num-c">24</td><td class="num-c" style="color:var(--bad)">−23.6</td></tr>
+          <tr><td><b>2</b></td><td class="num-c">150</td><td class="num-c">8,250</td><td class="num-c">114</td><td class="num-c">4.8</td><td class="num-c">—</td><td class="num-c">5.1</td><td class="num-c">1.2</td><td class="num-c">31</td><td class="num-c" style="color:var(--bad)">−27.2</td></tr>
+          <tr><td><b>3</b></td><td class="num-c">500</td><td class="num-c">27,500</td><td class="num-c">413</td><td class="num-c">17.7</td><td class="num-c">3.9</td><td class="num-c">23.3</td><td class="num-c">5.3</td><td class="num-c">39</td><td class="num-c" style="color:var(--bad)">−21.0</td></tr>
+          <tr class="be"><td><b>4</b></td><td class="num-c">1,500</td><td class="num-c">82,500</td><td class="num-c">1,287</td><td class="num-c">56.6</td><td class="num-c">25.2</td><td class="num-c">87.7</td><td class="num-c">18.8</td><td class="num-c">55</td><td class="num-c">+13.9</td></tr>
+          <tr><td><b>5</b></td><td class="num-c">4,000</td><td class="num-c">220,000</td><td class="num-c">3,564</td><td class="num-c">160.4</td><td class="num-c">88.3</td><td class="num-c">267.2</td><td class="num-c">57.3</td><td class="num-c">78</td><td class="num-c" style="color:var(--ok)">+131.9</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="9">Acumulado a punto de equilibrio</td><td class="num-c" style="color:var(--bad)">−57.9</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="src">Cifras en millones de pesos. Core = markup de emisión. Variable = 2.15% del volumen capturable (red × redención) más costo de fondeo. Fijo = tecnología, legal/PLD-FT y operaciones. El crédito entra en el año 3 con provisión de Pérdida del 8% sobre la cartera.</p>
+
+    <h3 style="margin-top:3.2rem;margin-bottom:1rem">Punto de equilibrio</h3>
+    <div class="be">
+      <div><div class="n acc">$910 MDP</div><div class="l">volumen emitido anual</div></div>
+      <div><div class="n acc">60,700</div><div class="l">portadores activos</div></div>
+      <div><div class="n acc">6,300</div><div class="l">comercios afiliados</div></div>
+      <div><div class="n">Año 4</div><div class="l">con la estructura de costos actual</div></div>
+    </div>
+
+    <div class="note n-warn" style="margin-top:1.6rem">
+      <div class="ic">⚠</div>
+      <div>
+        <b>El documento anterior declaraba break-even en el año 3 con 50,000 portadores.</b>
+        <p>Con 50,000 portadores y ticket de $1,200 el volumen es $720 MDP, que a 4.29% de contribución neta da $30.9 MDP contra $39 MDP de costos fijos: <b>−$8.1 MDP, margen negativo</b>. La cifra solo cuadraba por el error de 10x y el doble conteo de comisión. El break-even real es 60,700 portadores y llega en el año 4.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CAPITAL ================= -->
+<section id="capital">
+  <div class="wrap">
+    <div class="ask">
+      <span class="eyebrow" style="color:var(--cyan)">Ronda abierta</span>
+      <h2>$130 MDP hasta el punto de equilibrio</h2>
+      <p class="sub">La operación no se autofinancia: hay 3 años de pérdidas operativas y un requirement de working capital que crece con el volumen. Por eso el ask no es $25–30 MDP.</p>
+
+      <div class="rounds">
+        <div class="round">
+          <div class="k">Semilla · 18 meses</div>
+          <div class="a">$35 MDP</div>
+          <div class="u">Cubre Fase 0 y Fase 1 completas</div>
+          <p>Constitución legal, prototipo de monedero electrónico, autorización SAT, 20 empresas cliente, 500 comercios y 2,000 portadores. Con esta ronda se operativiza y se prueba la unit economics con datos reales.</p>
+        </div>
+        <div class="round">
+          <div class="k">Serie A · año 2</div>
+          <div class="a">$95 MDP</div>
+          <div class="u">Cubre pérdidas + working capital</div>
+          <p>Es la ronda que realmente decide el negocio. $58 MDP son pérdidas acumuladas hasta el equilibrio y $71 MDP de capital de trabajo para financiar la liquidación a comercios mientras se cobra a empresas.</p>
+        </div>
+      </div>
+
+      <h3 style="color:#fff;margin-bottom:.9rem">Uso de los $130 MDP</h3>
+      <div class="use"><span>Capital de trabajo · float de liquidación a comercios</span><b>$71 MDP · 55%</b></div>
+      <div class="use"><span>Pérdidas operativas netas acumuladas hasta el equilibrio</span><b>$58 MDP · 45%</b></div>
+      <div class="use" style="margin-top:1rem;border-top:1px solid rgba(255,255,255,.3);padding-top:.8rem"><span style="color:#fff;font-weight:600">Total</span><b style="font-size:1.15rem;color:var(--cyan)">$130 MDP</b></div>
+      <p style="margin-top:1rem;font-size:.8rem;color:rgba(255,255,255,.55)">El requirement simultáneo máximo es de $128 MDP: pérdidas acumuladas más el pico de float del año 4. Ambos conceptos se piden en la misma ronda, pero no son lo mismo. El capital de trabajo no es un gasto, es un saldo revolvente que se recupera con la cobranza; por eso se presenta como línea separada y no se diluye dentro del gasto corriente.</p>
+
+      <div class="unit-note" style="margin-top:1.8rem">
+        <strong>El float no es un detalle de tesorería, es la estructura del negocio.</strong> ValePay paga al comercio en D+2 y cobra a la empresa después. Cada peso de volumen emitido exige 20 días de financiamiento. Por eso el costo de fondeo entra en la unit economics y por eso un inversionista que solo lea el P&amp;L sin ver esta línea va a subestimar el requirement por más de la mitad.
+      <p style="margin-top:1rem;font-size:.8rem;color:rgba(255,255,255,.55)">El requirement simultáneo máximo es de $128 MDP: pérdidas acumuladas más el pico de float del año 4. Ambos conceptos se piden en la misma ronda, pero no son lo mismo. El capital de trabajo no es un gasto, es un saldo revolvente que se recupera con la cobranza; por eso se presenta como línea separada y no se diluye dentro del gasto corriente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEGAL ================= -->
+<section class="alt" id="legal">
+  <div class="wrap">
+    <span class="eyebrow">Marco legal</span>
+    <h2>La barrera de entrada es regulatoria, y es real</h2>
+    <p class="sub">No se puede deducir un vale sin monedero autorizado. Este es el requisito que separa a ValePay de una app de registro de ventas, y el que justifica la defensa técnica.</p>
+
+    <div class="grid g2" style="margin-bottom:2rem">
+      <div class="card">
+        <span class="tag t-crit">Bloqueante</span>
+        <h3 style="margin-top:.7rem">Autorización SAT como emisor de monederos</h3>
+        <p>El art. 27 fracc. XI de la LISR exige que los vales sean emitidos por persona moral autorizada. El trámite requiere:</p>
+        <ul>
+          <li>Prototipo del monedero electrónico conforme a reglas 3.3.1.16 y 3.3.1.17 de la RMF</li>
+          <li>Prototipos de contratos de afiliación, de comercios y de clientes</li>
+          <li>Declaración de que el monedero no podrá usarse para disponer de efectivo ni cambiar por títulos de crédito</li>
+          <li>Vigencia anual con renovación</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag t-crit">Bloqueante</span>
+        <h3 style="margin-top:.7rem">PlD/FT y beneficiario controlador</h3>
+        <p>La SCJN ha validado la exigencia de identificar al beneficiario controlador en la emisión de monederos. Obliga a:</p>
+        <ul>
+          <li>Expediente único de identificación por empresa cliente</li>
+          <li>Documentación del beneficiario controlador</li>
+          <li>Monitoreo de operaciones inusuales y reporte a la UIF</li>
+          <li>Capacitación continua del personal</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag t-alta">Anual</span>
+        <h3 style="margin-top:.7rem">Límites fiscales de la operación</h3>
+        <p>Tantos controles sobre el uso del vale como sobre la emisión:</p>
+        <ul>
+          <li>Deducción empresarial: hasta 7 veces la UMA mensual por trabajador</li>
+          <li>Exención al trabajador: hasta 40% del salario mínimo diario × 30 días</li>
+          <li>Prohibido el retiro de efectivo</li>
+          <li>Prohibidas bebidas alcohólicas y tabaco</li>
+          <li>Prohibido el canje en giros no autorizados</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag t-media">Si escala</span>
+        <h3 style="margin-top:.7rem">Ley Fintech / IFPE</h3>
+        <p>Emitir vales no es por sí solo actividad fintech, pero la operación de crédito a comercios sí lo es. Constituirse como IFPE requiere:</p>
+        <ul>
+          <li>Autorización de CNBV y Banco de México</li>
+          <li>Capital mínimo de 5 millones de UDIS (~35 MDP)</li>
+          <li>Proceso de 6 a 8 meses</li>
+          <li>Cumplimiento del Capítulo V de las CUIFPEs para proveedores tecnológicos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note n-warn">
+      <div class="ic">⚠</div>
+      <div>
+        <b>El crédito a comercios no puede esperar a "escalar".</b>
+        <p>Prestar es actividad crediticia y se regula desde el primer peso, no desde el primer millón. La alternativa a la licencia CNBV es financiarlo con capital propio y unkuliere Externo sujeto a reporte, pero la opción debe estar resuelta antes de la Fase 2, no planteada como decisión futura.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TECH ================= -->
+<section id="tech">
+  <div class="wrap">
+    <span class="eyebrow">Arquitectura</span>
+    <h2>Lo mínimo que tiene que funcionar el día uno</h2>
+    <p class="sub">Cinco componentes críticos. Los que no lo son se difieren hasta que el volumen los justifica.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Componente</th><th>Stack</th><th>Función</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr><td><b>Emisión de vales</b></td><td>Cloud, microservicios, API REST</td><td>Monederos, saldo, CFDI con complemento de vales</td><td><span class="tag t-crit">Crítica</span></td></tr>
+          <tr><td><b>App del portador</b></td><td>iOS / Android nativo o React Native</td><td>Saldo en tiempo real, historial, comercios cercanos, ofertas</td><td><span class="tag t-crit">Crítica</span></td></tr>
+          <tr><td><b>Terminal de comercio</b></td><td>QR dinámico, NFC; RFID opcional</td><td>Cobro sin hardware. Sin esto no hay aceptación y sin aceptación no hay volumen</td><td><span class="tag t-crit">Crítica</span></td></tr>
+          <tr><td><b>Switch transaccional</b></td><td>Procesador propio o autorizado</td><td>Autorización en tiempo real, conciliación, liquidación</td><td><span class="tag t-crit">Crítica</span></td></tr>
+          <tr><td><b>Seguridad y PLD</b></td><td>AES-256, tokenización, MFA, logs inmutables</td><td>Protección de datos y trazabilidad de auditoría</td><td><span class="tag t-crit">Crítica</span></td></tr>
+          <tr><td><b>Motor de scoring</b></td><td>XGBoost, regresión logística, feature store</td><td>Score del comercio a partir de su propio flujo transaccional</td><td><span class="tag t-alta">Alta · año 3</span></td></tr>
+          <tr><td><b>Data lake</b></td><td>Snowflake o BigQuery, ETL, dashboards</td><td>Segmentación de portadores y optimización de ofertas</td><td><span class="tag t-alta">Alta · año 3</span></td></tr>
+          <tr><td><b>Infraestructura de comercios</b></td><td>Integración con POS, lectores RFID</td><td>Facilitar aceptación sin inversión del comerciante</td><td><span class="tag t-media">Media · año 4</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Estrategia de terminal: arrancar con QR y NFC en la app. El RFID se ofrece como módulo de pago opcional solo para comercios con alto volumen, porque su costo de implementación es la razón principal por la que el pequeño comercio no acepta vales hoy.</p>
+  </div>
+</section>
+
+<!-- ================= ROADMAP ================= -->
+<section class="alt" id="roadmap">
+  <div class="wrap">
+    <span class="eyebrow">Ejecución</span>
+    <h2>Roadmap por fases</h2>
+    <p class="sub">Cada fase tiene un entregable verificable. Los objetivos comerciales coinciden ahora con la proyección financiera, que es la corrección principal frente al documento anterior.</p>
+
+    <div class="grid g2" style="gap:3rem">
+      <div class="tl">
+        <div class="tl-i">
+          <div class="tl-h"><span class="tl-p">Meses 1–6</span><b>Fase 0 · Preparación</b></div>
+          <ul>
+            <li>Constitución de la sociedad y equipo legal/fiscal</li>
+            <li>Prototipo de monedero electrónico ante el SAT</li>
+            <li>Contratos de afiliación tipo con comercios y clientes</li>
+            <li>Round semilla de $35 MDP cerrado</li>
+          </ul>
+        </div>
+        <div class="tl-i">
+          <div class="tl-h"><span class="tl-p">Meses 7–12</span><b>Fase 1 · Piloto</b></div>
+          <ul>
+            <li>Autorización SAT obtenida y operativa</li>
+            <li>20 empresas cliente, 500 comercios, 2,000 portadores</li>
+            <li>Medición real de ticket, redención y share de red</li>
+            <li>Validación de la unit economics con datos, no con supuestos</li>
+          </ul>
+        </div>
+        <div class="tl-i">
+          <div class="tl-h"><span class="tl-p">Año 2</span><b>Fase 2 · Crecimiento</b></div>
+          <ul>
+            <li>150 empresas, ~8,250 portadores</li>
+            <li>Lanzamiento del motor de scoring</li>
+            <li>Resolución de la estructura de regulación crediticia</li>
+            <li>Serie A de $95 MDP</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl">
+        <div class="tl-i">
+          <div class="tl-h"><span class="tl-p">Año 3</span><b>Fase 3 · Escala</b></div>
+          <ul>
+            <li>500 empresas, ~27,500 portadores</li>
+            <li>Primer crédito a comercios con book real</li>
+            <li>$413 MDP de volumen emitido</li>
+            <li>Pérdida de $21 MDP: el último año de inversión</li>
+          </ul>
+        </div>
+        <div class="tl-i done">
+          <div class="tl-h"><span class="tl-p">Año 4</span><b>Fase 4 · Equilibrio</b></div>
+          <ul>
+            <li>1,500 empresas, ~82,500 portadores, 6,300 comercios</li>
+            <li>Primer año con resultado operativo positivo: +$13.9 MDP</li>
+            <li>El crédito representa el 29% del ingreso</li>
+            <li>Evaluación de IFPE si la cartera lo justifica</li>
+          </ul>
+        </div>
+        <div class="tl-i">
+          <div class="tl-h"><span class="tl-p">Año 5</span><b>Fase 5 · Consolidación</b></div>
+          <ul>
+            <li>4,000 empresas, ~220,000 portadores</li>
+            <li>$267 MDP de ingresos, $132 MDP de resultado</li>
+            <li>Expansión nacional y venta cruzada con data real</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EMPRESARIOS ================= -->
+<section id="empresarios">
+  <div class="wrap">
+    <span class="eyebrow">Para la empresa</span>
+    <h2>Si tu negocio tiene empleados registrados, esto es lo que obtienes</h2>
+    <p class="sub">El beneficio de vales de despensa es una decisión fiscal, no de recursos humanos. Y se puede activar sin cambiar tu operación.</p>
+
+    <div class="grid g3">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 14l6-6M9 12a2 2 0 100-4 2 2 0 000 4zM15 16a2 2 0 100-4 2 2 0 000 4z"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Deducible hasta 7× la UMA</h3>
+        <p>Por cada trabajador registrado puedes deducir el vale hasta siete veces la UMA mensual, y el empleado queda exento hasta el 40% de su salario mínimo diario. El tope práctico ronda $3,450 mensuales por persona.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+        <h3>Alta en cero</h3>
+        <p>El monedero se activa con el depósito del fondo. No hay tarjeta física, no hay chip que repartir, no hay logística de entrega. El alta toma días, no meses.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg></div>
+        <h3>CFDI con complemento de vales</h3>
+        <p>Cada emisión y cada canje queda trazado con los CFDI que el SAT exige. La trazabilidad total no es un extra: es el requisito para que la deducción se sostenga en una auditoría.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Sin cuota ni permanencia</h3>
+        <p>El compromiso es sobre el monto efectivamente emitido. Si tu plantilla baja, tu gasto baja con ella.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div>
+        <h3>Cobertura sincrónica</h3>
+        <p>La red de comercios affiliated includes abarrotes, farmacias, carnicerías, panaderías, tortillerías y fruterías — los giros donde el SNAP diario de un empleado se gasta de todas formas.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div>
+        <h3>Cumplimiento gestionado</h3>
+        <p>Beneficiario controlador, expediente PLD/FT, monitoreo de operaciones inusuales y capacitación continua son responsabilidad de ValePay, no tuya.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:2.4rem;text-align:center">
+      <a class="btn btn-s" href="#capital">Solicitar propuesta comercial →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RIESGOS ================= -->
+<section class="alt" id="riesgos">
+  <div class="wrap">
+    <span class="eyebrow">Riesgos</span>
+    <h2>Lo que puede salir mal, y qué hace al respecto</h2>
+    <p class="sub">Un documento que solo lista riesgos con mitigación genérica no es un documento de gestión. Estos están ordenados por probabilidad × impacto.</p>
+
+    <div class="grid g2">
+      <div class="risk hot">
+        <h3>1. Adopción del comercio — el riesgo dominante</h3>
+        <p>Sin comercios que acepten, el vale no tiene utilidad y la empresa cliente se va. El problema no es tecnológico: es que el pequeño comercio desconfía de la formalidad y ve el vale como competencia del efectivo. Es el riesgo que puede matar la operación en el piloto, y es el único que no se resuelve con dinero.</p>
+        <div class="mit"><b>Mitigación:</b> circuito de 3 km de radio por cliente inicial, tasa de descuento deliberadamente baja, liquidación en efectivo o transferencia en menos de 24 h, y un solo comercio como punto de entrada. Se mide participación de billetera por comercio, no número de afiliados.</div>
+      </div>
+      <div class="risk hot">
+        <h3>2. Working capital y float de liquidación</h3>
+        <p>Necesario por diseño: ValePay paga al comercio en D+2 y cobra a la empresa después. A $3,564 MDP de volumen anual, cada día de retraso en la Cobranza es ~$10 MDP adicionales de capital requerido. Un solo mes deMorosidad corporativa a escala es un hole de caja.</p>
+        <div class="mit"><b>Mitigación:</b> depósito anticipado de la empresa cliente, línea de crédito revolvente contratada antes de la Fase 3, y límite de exposición por comercio como porcentaje de su volumen. El requirement de $71 MDP se estructura como instrumento financiero, no como caja disponible.</div>
+      </div>
+      <div class="risk">
+        <h3>3. Permiso regulatorio</h3>
+        <p>Pérdida de la autorización SAT o cambio normativo. También la exposición a la obligación de identificar al beneficiario controlador, que es la carga operativa más pesada del modelo.</p>
+        <div class="mit"><b>Mitigación:</b> equipo legal interno, relación proactiva con la autoridad, renovación gestionada con seis meses de anticipación y expediente de evidencia actualizado de forma continua.</div>
+      </div>
+      <div class="risk">
+        <h3>4. Ticket por debajo del supuesto</h3>
+        <p>Todo el modelo es lineal en ticket promedio. El documento anterior usaba $800 a $1,500 mensuales. Si la PyME asigna $600, el volumen necesario para el equilibrio sube 2× sin que nada más en el modelo cambie.</p>
+        <div class="mit"><b>Mitigación:</b> medir ticket real en las primeras 20 empresas antes de fijar la proyección, y construir el plan sobre el percentil bajo observado, no sobre el promedio deseado.</div>
+      </div>
+      <div class="risk">
+        <h3>5. Dependencia de un cliente ancla</h3>
+        <p>El negocio es B2B2C con un solo pagador. Un cliente corporativo grande representa la diferencia entre el piloto y la quiebra, y su responsable de beneficios puede cambiar de proveedor con un correo.</p>
+        <div class="mit"><b>Mitigación:</b> diversificar a más de 40 empresas en el año 2, ninguna por encima del 8% del volumen, y aislar el riesgo de cada cliente con un límite de exposición.</div>
+      </div>
+      <div class="risk">
+        <h3>6. El crédito no encuentra un ángulo que funcione</h3>
+        <p>El scoring con datos propios es la tesis, pero también es la parte menos probada. Con 2,000 comercios y pocas transacciones por comercio, no hay señal estadística. Y si funciona, requiere licencia.</p>
+        <div class="mit"><b>Mitigación:</b> tratarlo como opción y no como base case hasta el año 4, resolver la regulación crediticia antes de la Fase 2, y lanzar lending con capital propio en lugar de fondeo externo mientras se obtiene la autorización.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="wrap" style="max-width:840px">
+    <span class="eyebrow">Preguntas</span>
+    <h2>Lo que suelen preguntar</h2>
+
+    <div class="faq" style="margin-top:2rem">
+      <details class="fq" open>
+        <summary>¿Por qué el margen es de 4.29% y no de 60-70%?</summary>
+        <div class="ans"><p>Porque la comisión del emisor y el descuento del comercio son el mismo peso visto desde dos extremos. Cuando un comercio cobra un vale, recibe 98.5–99.5% del valor facial; la diferencia la pone ValePay y es su margen bruto. Sumarla a la comisión de emisión como dos ingresos independientes produce un 72% de margen de contribución que no existe.</p><p>El 4.29% sale de $4.30 de markup, menos $2.25 de costos variables (descuento al comercio, procesamiento, fraude), ajustado por 60% de redención y share de red. La rentabilidad del negocio está en el volumen y en la eficiencia de la red, no en el markup.</p></div>
+      </details>
+      <details class="fq">
+        <summary>¿Qué cambió respecto al modelo anterior?</summary>
+        <div class="ans"><p>Cuatro correcciones. La primera: las líneas de ingreso estaban 10× por debajo de su propia fórmula, un error de un dígito. La segunda: la comisión de emisión y el spread de liquidación se sumaban como ingresos independientes cuando son el mismo peso. La tercera: el punto de equilibrio declaraba $54.2 MDP de ingresos equivalentes a 2.3 millones de portadores, cuando la propia tabla atribuía $354.3 MDP a esos mismos 2.3 millones — una discrepancia de 6.5×. La cuarta: faltaba por completo el capital de trabajo, que es $71 MDP solo en la etapa de equilibrio.</p><p>Con esas correcciones el equilibrio real es 60,700 portadores en el año 4, y el requirement total es $130 MDP, no $25–30 MDP.</p></div>
+      </details>
+      <details class="fq">
+        <summary>¿Por qué el comercio no cobra comisión?</summary>
+        <div class="ans"><p>Porque el margen del emisor ya es estrecho y el comercio pequeño no tiene margen para renunciar a ese ingreso. El 0.5–1.5% al comercio es lo que financia el incentivo de aceptación sin trasladar el costo al portador, pero es un costo, no un ingreso. Si se le transfiere la comisión, el comercio se va y se pierde el nodo de datos.</p></div>
+      </details>
+      <details class="fq">
+        <summary>¿Qué pasa si no se obtiene la autorización del SAT?</summary>
+        <div class="ans"><p>Sin autorización no hay deducción para la empresa cliente y el modelo no tiene producto. Es un proyecto binario en su fase 0: por eso el prototipo del monedero electrónico y los contratos tipo se desarrollan antes de escribir código de la app, y por eso la semilla de $35 MDP se pide contra ese entregable y no contra un roadmap de features.</p></div>
+      </details>
+      <details class="fq">
+        <summary>¿Cuándo hay ingresos reales?</summary>
+        <div class="ans"><p>Ingresos marginales desde el mes 9, al obtener la autorización SAT. El primer año cierra cerca de $0.5 MDP contra $24 MDP de costos fijos. La pérdida máxima ocurre en el año 2, con −$27.2 MDP, y el equilibrio operativo llega en el año 4 con +$13.9 MDP.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-in">
+      <div>
+        <div class="brand">Vale<em style="color:var(--cyan)">Pay</em></div>
+        <p>Ecosistema de vales electrónicos y datos financieros para la PyME mexicana.</p>
+      </div>
+      <div class="f-dis">
+        <strong>Documento de presentación · Septiembre 2026</strong>
+        <p>Las proyecciones financial de este documento son estimaciones internas construidas sobre supuestos explícitos, no hechos verificables. No constituye asesoría legal ni financiera. Los requisitos regulatorios, fiscales y de autorización deben validarse con un despacho especializado antes de cualquier operación.</p>
+        <div class="f-src">Fuentes: INEGI (DENUE 05/2026, ENOE 2T 2026), Aseval 2025, SAT (Anexo 28 RMF, reglas 3.3.1.16–17), LISR art. 27 fracc. XI y art. 93, LFPDPPP, Ley para Regular las Instituciones de Tecnología de Pago Electrónico.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('burger'),m=document.getElementById('menu');
+  if(b){b.addEventListener('click',function(){
+    var o=m.classList.toggle('open');
+    b.setAttribute('aria-expanded',o?'true':'false');
+    b.textContent=o?'✕':'☰';
+  });}
+  m&&m.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){m.classList.remove('open');b.textContent='☰';b.setAttribute('aria-expanded','false');}
+  });
+})();
+</script>
+</body>
+</html>
